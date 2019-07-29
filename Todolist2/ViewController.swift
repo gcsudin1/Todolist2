@@ -25,23 +25,24 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoListItems.count
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.textLabel?.textColor = UIColor.black       // changing textcolor to black again as it was blue before
+        tableView.reloadData()
         if editingStyle == .delete{
             todoListItems.remove(at: indexPath.row)
-            self.tableView.deleteRows(at:[indexPath],with:.automatic)
+            self.tableView.deleteRows(at:[indexPath],with:.automatic) //deleting the rows
             UserDefaults.standard.set(todoListItems, forKey: "item")
         }
+        cell?.textLabel?.textColor = UIColor.black
         tableView.reloadData()
     }
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.textLabel?.textColor = UIColor.blue
+        cell?.textLabel?.textColor = UIColor.blue          //changing textcolor to blue
         tableView.reloadData()
         return nil
     }
